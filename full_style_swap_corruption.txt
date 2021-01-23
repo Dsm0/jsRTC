@@ -1,0 +1,29 @@
+different corruption method: randomly swaps the styles of two elements
+
+minified, bookmarklet version:
+javascript:(function(){var elems=document.body.getElementsByTagName("*"),swapNodeStyle=function(sourceNode,targetNode){var style1=window.getComputedStyle(sourceNode);var style2=window.getComputedStyle(targetNode);Array.from(style1).map(function(key){return targetNode.style.setProperty(key,style1.getPropertyValue(key),style1.getPropertyPriority(key))});Array.from(style2).map(function(key){return sourceNode.style.setProperty(key,style2.getPropertyValue(key),style2.getPropertyPriority(key))})},getOne=function(){return elems[Math.floor(Math.random()*elems.length)]},corruptMe=function(){var e=getOne(),s=getOne();swapNodeStyle(e,s)};setInterval(corruptMe,1)})();
+
+//// full code
+     javascript:(function(){
+     var elems = document.body.getElementsByTagName("*"), // all elements
+         swapNodeStyle = function(sourceNode, targetNode){
+             var style1 = window.getComputedStyle(sourceNode);
+             var style2 = window.getComputedStyle(targetNode);
+             Array.from(style1).map(function (key) {
+                 return targetNode.style.setProperty(key, style1.getPropertyValue(key), style1.getPropertyPriority(key));
+             });
+             Array.from(style2).map(function (key) {
+                 return sourceNode.style.setProperty(key, style2.getPropertyValue(key), style2.getPropertyPriority(key));
+             });
+         },
+         getOne = function() {
+             return elems[Math.floor(Math.random() * elems.length)]
+         }, // gets one random html element
+         corruptMe = function() {
+             var e = getOne(), //get first class of random element
+                 s = getOne(); // get another random element
+             swapNodeStyle(e,s);
+         };
+         setInterval(
+             corruptMe, 1);
+     })()
